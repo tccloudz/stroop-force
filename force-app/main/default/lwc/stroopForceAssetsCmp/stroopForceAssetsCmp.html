@@ -1,0 +1,36 @@
+<template>
+
+    <!--<div style="height: 300px;">-->
+        <!--<lightning-datatable
+                hide-checkbox-column="true"
+                key-field="asset"
+                data={data}
+                columns={columns}
+                onrowaction={handleRowAction}>
+        </lightning-datatable>-->
+
+        <br/><br/>
+        <template for:each={data} for:item="asset">
+
+            <lightning-card key={asset.asset} variant="Narrow" title={asset.assetCode} icon-name="standard:crypto_wallet">
+                <lightning-button-menu alternative-text="Show menu" icon-name="utility:down" variant="border-filled"
+                    slot="actions" menu-alignment="auto">
+                    <lightning-menu-item label="Send" value={asset.asset} onclick={handleRowAction}></lightning-menu-item>
+                    <lightning-menu-item label="Swap" value={asset.assetBalanceCombo} onclick={handleRowAction}></lightning-menu-item>
+
+                </lightning-button-menu>
+                <p class="slds-p-horizontal_small">
+                    <strong>
+                        Balance: {asset.balance}<br/>
+                        Issuer: {asset.issuer} <br />
+
+                    </strong>
+                </p>
+                
+                <!--<p slot="footer">Card Footer</p>-->
+            </lightning-card>
+            <hr key={asset.asset}/>
+        </template>
+    <!--</div>-->
+    
+</template>

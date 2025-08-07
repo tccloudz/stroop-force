@@ -1,0 +1,30 @@
+<template>
+
+    <div class="row">
+        <h2 class="header">Wallet Settings</h2>
+        <div lwc:if={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" label="Wallet Address" id="addr-input" value={walletAddr} onchange={handleWalletAddrChange} ></lightning-input>
+            <lightning-input type="password" label="Private Key" id="pk-input" value={pk} onchange={handlePKChange}></lightning-input>
+            <lightning-input type="password" label="Encryption Key" id="key-input" value={ek} onchange={handleEncKeyChange} ></lightning-input>
+
+            <br/><br/>
+            <lightning-button variant="brand" label="Save" title="Save Key Settings" onclick={handleSettingsSave} class="slds-m-left_x-small"></lightning-button>
+            <br />
+            <hr />
+            <br/>
+            <lightning-input type="text" label="Notification Email" id="email-addr" value={emailAddr} onchange={handleEmailAddrChange} ></lightning-input><br/>
+            <strong>Trade Fill Notification</strong><br/><br />
+            <lightning-button-group>
+                <lightning-button label="Off" icon-name="utility:close" variant={tradeNotOffBtnVariant} class="slds-m-left_x-small" onclick={handleTradeNotOff}></lightning-button>
+                <lightning-button label="On" icon-name="utility:alert" variant={tradeNotOnBtnVariant} class="slds-m-left_x-small" onclick={handleTradeNotOn}></lightning-button>
+            </lightning-button-group>
+            <br/><br/>
+            
+
+        </div>
+    </div>
+    
+</template>

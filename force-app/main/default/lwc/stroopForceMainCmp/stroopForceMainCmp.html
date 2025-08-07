@@ -1,0 +1,44 @@
+<template>
+
+
+    <lightning-card  title="Stroop Force Stellar Wallet">
+        <!--<lightning-button label="New" slot="actions"></lightning-button>-->
+ 
+
+        <lightning-button-menu alternative-text="Show menu" icon-name="utility:down" variant="border-filled" slot="actions" menu-alignment="auto">
+            <lightning-menu-item label="Assets" value="assets" onclick={handleShowAssets}></lightning-menu-item>
+            <lightning-menu-item label="Trade" value="trade" onclick={handleShowTrade}></lightning-menu-item>
+            <lightning-menu-item label="Settings" value="settings" onclick={handleShowSettings}></lightning-menu-item>
+        </lightning-button-menu>
+        
+        <p class="slds-p-horizontal_small"></p>
+
+            <div lwc:if={showSettings}>
+
+                <c-stroop-force-settings-cmp ></c-stroop-force-settings-cmp>
+            </div>
+
+            <div lwc:if={showAssets}>
+
+                <c-stroop-force-assets-cmp ></c-stroop-force-assets-cmp>
+            </div>
+
+            <div lwc:if={showTrade}>
+
+                <c-stroop-force-trade-cmp></c-stroop-force-trade-cmp>
+            </div>
+
+            <div lwc:if={showSetupMsg}>
+
+                <p><lightning-formatted-text value="Please configure your wallet settings to start using the wallet" ></lightning-formatted-text></p>
+                <p>
+                    <br /><br/>
+                    <lightning-button label="Go To Settings" title="configure-settings" onclick={handleShowSettings} class="slds-m-center_x-small"></lightning-button>
+                </p>
+            </div>
+            
+        
+        <p slot="footer"></p>
+    </lightning-card>
+    
+</template>

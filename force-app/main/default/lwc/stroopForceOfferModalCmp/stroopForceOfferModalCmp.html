@@ -1,0 +1,142 @@
+<template>
+    
+
+   
+    
+            <lightning-modal-header label={offerModalLabel}></lightning-modal-header>
+            <lightning-modal-body>
+                <div lwc:if={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+                </div>
+                <div lwc:if={showEdit}>
+
+                    <lightning-select
+                    name="buy_sell"
+                    label="Buy or Sell?"
+                    value={offerSide}
+                    options={sideOpts}
+                    onchange={handleOfferSideChange}
+                    required ></lightning-select>
+
+                    <div lwc:if={showBuy}>
+
+                        <lightning-tile label="" type="media">
+                            <lightning-icon slot="media" icon-name="utility:forward"></lightning-icon>
+                            <lightning-input type="text" label="Buying" id="buy-asset" value={baseAssetCode} disabled ></lightning-input>
+                            <lightning-input type="number" label={buyCurrBalLabel} id="source-asset-balance" step="0.0000001" value={baseAssetBalance} disabled ></lightning-input>
+                            <lightning-input type="number" label={buyPriceLabel} id="buy-price" step="0.0000001" value={buyPrice} onchange={handleBuyPriceChange} required></lightning-input>
+                            <div style="text-align: right;">
+                                <lightning-button-menu alternative-text="Show menu" menu-alignment="auto">
+                                    <lightning-menu-item value="AtSpread" label="At Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="OneSpread" label="1% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="FiveSpread" label="5% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="TenSpread" label="10% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="TwentySpread" label="20% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="ThirtySpread" label="30% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                </lightning-button-menu>
+                            </div>
+                            <lightning-input type="number" label={buyAmountLabel} id="buy-amount" step="0.0000001" value={buyAmount} onchange={handleBuyAmountChange} required></lightning-input>
+                            <lightning-input type="number" label={buyTotalLabel} id="buy-total" step="0.0000001" value={buyTotal} disabled></lightning-input>
+                        </lightning-tile>
+
+                    </div>
+
+                    <div lwc:if={showSell}>
+
+                        <lightning-tile label="" type="media">
+                            <lightning-icon slot="media" icon-name="utility:back"></lightning-icon>
+                            <lightning-input type="text" label="Selling" id="sell-asset" value={baseAssetCode} disabled ></lightning-input>
+                            <lightning-input type="number" label={sellCurrBalLabel} id="sell-asset-balance" step="0.0000001" value={baseAssetBalance} disabled ></lightning-input>
+                            <lightning-input type="number" label={sellPriceLabel} id="sell-price" step="0.0000001" value={sellPrice} onchange={handleSellPriceChange} required></lightning-input>
+                            <div style="text-align: right;">
+                                <lightning-button-menu alternative-text="Show menu" menu-alignment="auto">
+                                    <lightning-menu-item value="AtSpread" label="At Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="OneSpread" label="1% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="FiveSpread" label="5% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="TenSpread" label="10% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="TwentySpread" label="20% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                    <lightning-menu-item value="ThirtySpread" label="30% off Spread" onclick={handleSpreadPriceClick}></lightning-menu-item>
+                                </lightning-button-menu>
+                            </div>
+                            <lightning-input type="number" label={sellAmountLabel} id="sell-amount" step="0.0000001" value={sellAmount} onchange={handleSellAmountChange} required></lightning-input>
+                            <lightning-input type="number" label={sellTotalLabel} id="sell-total" step="0.0000001" value={sellTotal} disabled></lightning-input>
+                        </lightning-tile>
+
+                    </div>
+
+                    <br/>
+                        <div style="text-align: center;">
+                            <lightning-badge label={highestBidPriceStr} class="'slds-theme_success'"></lightning-badge>
+                            <lightning-badge label={spreadPriceStr}></lightning-badge>
+                            <lightning-badge label={lowestAskPriceStr} class="'slds-theme_error'"></lightning-badge>
+                        </div>
+        
+                    <br/>
+                    <!--<br />
+                    <div style="height: 300px;">
+                        <lightning-datatable hide-checkbox-column="true" key-field="asset" data={ordBookData} columns={ordBookCols}
+                            >
+                        </lightning-datatable>
+                    </div>-->
+                   
+                    
+                    
+                  
+                     
+                </div><!--end of edit-->
+
+                <div lwc:if={showReview}>
+    
+                    Please confirm the price and amount before continuing. <br/>
+                    Enter your password and use the "Submit Offer" button. 
+
+                    <lightning-input type="text" label={reviewBuySellLabel} id="confirm-buy-sell" value={baseAssetCode} disabled ></lightning-input>
+                    <lightning-input type="number" label={reviewBuySellPriceLabel} id="confirm-buy-sell-price" step="0.0000001" value={confirmPrice} disabled></lightning-input>
+                    <lightning-input type="number" label={reviewBuySellAmountLabel} id="confirm-amount" step="0.0000001" value={confirmAmount} disabled></lightning-input>
+                    <lightning-input type="number" label={reviewBuySellTotalLabel} id="confirm-total" step="0.0000001" value={confirmTotal} disabled></lightning-input>
+
+                    <hr />
+
+                    <strong>Alert when offer price is 
+                    <lightning-layout multiple-rows>
+                    <lightning-layout-item size="1">
+                    <lightning-input type="number" label="" id="spread-deviation-per" step="0.01" value={spreadDeviationPer} onchange={handleSpreadDevPerChange} ></lightning-input>
+                </lightning-layout-item> 
+            </lightning-layout> <br />percent away from the spread price.</strong>
+                    <hr />
+
+                    <br />
+                    <lightning-input type="password" label="Password" id="enc-key" value={encKey} onchange={handleEKChange} required></lightning-input>
+                
+                </div><!--end of review-->
+                <div lwc:if={showResult}>
+                    <div lwc:if={showSuccessIcon}>
+    
+                        <lightning-icon icon-name="action:approval" alternative-text="Offer Success" title="Offer Success"></lightning-icon>
+                    </div>
+                    <br/>
+                    <lightning-formatted-rich-text value={resultMsg}></lightning-formatted-rich-text>
+                   
+    
+                </div><!--end of results-->
+                
+            </lightning-modal-body>
+            <lightning-modal-footer>
+                <div lwc:if={showEdit}>
+    
+                    <lightning-button label="Review" onclick={handleReview}></lightning-button>
+           
+                </div>
+                <div lwc:if={showReview}>
+                    <lightning-button variant="neutral" label="Go Back" onclick={handleGoBack}></lightning-button>
+                    <lightning-button variant={submitOfferButtonVar} label={submitOfferButtonLabel} onclick={handleSubmitOffer}></lightning-button>
+                </div>
+                <div lwc:if={showResult}>
+                    <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+                </div>
+                
+            </lightning-modal-footer>
+
+
+
+</template>

@@ -1,0 +1,64 @@
+<template>
+
+    <lightning-modal-header label="Viewing Active Offers"></lightning-modal-header>
+    <lightning-modal-body>
+        <div lwc:if={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+        </div>
+
+        <!--<lightning-datatable hide-checkbox-column="true" key-field="asset" data={offerData} columns={offerCols}
+                >
+            </lightning-datatable>-->
+
+        <div lwc:if={showOffers}>
+        <template for:each={offersData} for:item="offer">
+
+            <lightning-card key={offer.offerId} variant="Narrow" title={offer.offerId} icon-name="standard:contract">
+                <lightning-button-menu alternative-text="Show menu" icon-name="utility:down" variant="border-filled"
+                    slot="actions" menu-alignment="auto">
+                    <lightning-menu-item label="Cancel" value={offer.offerId} onclick={handleOfferItemClick}></lightning-menu-item>
+                    <lightning-menu-item label="Edit" value={offer.offerId} onclick={handleOfferItemClick}></lightning-menu-item>
+
+                </lightning-button-menu>
+                <p class="slds-p-horizontal_small">
+                    <strong>
+                        Offer ID: {offer.offerId}<br/>
+                        Selling: {offer.selling} <br />
+                        Buying: {offer.buying} <br />
+                        Price: {offer.price} <br />
+                        Amount: {offer.amount}
+                    </strong>
+                </p>
+                
+                <!--<p slot="footer">Card Footer</p>-->
+            </lightning-card>
+            <hr key={offer.offerId}/>
+        </template>
+
+        </div>
+
+        <div lwc:if={showCancelConfirm}>
+
+            Please confirm the cancellation of offer with ID <strong>{cancelOfferId}</strong>. Enter the password and use the<br/>
+            <strong>Confirm Cancel</strong> button.
+
+            <br />
+            <lightning-input type="password" label="Password" id="enc-key" value={encKey} onchange={handleEKChange} required></lightning-input>
+
+        </div>
+
+
+    </lightning-modal-body>
+    <lightning-modal-footer>
+
+
+        <div lwc:if={showCancelConfirm}>
+            <lightning-button variant="destructive" label="Confirm Cancel" onclick={initCancelOffer}></lightning-button>
+            <lightning-button variant="neutral" label="Go Back" onclick={handleGoBack}></lightning-button>    
+        </div>
+        <lightning-button label="Close" onclick={handleClose}></lightning-button>
+
+
+    </lightning-modal-footer>
+
+</template>

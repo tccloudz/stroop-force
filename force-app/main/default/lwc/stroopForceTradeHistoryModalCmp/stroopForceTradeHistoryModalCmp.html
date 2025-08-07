@@ -1,0 +1,42 @@
+<template>
+
+    <lightning-modal-header label="Viewing Trade History"></lightning-modal-header>
+    <lightning-modal-body>
+       
+        <template for:each={tradeData} for:item="trade">
+
+            <lightning-card key={trade.hashId} variant="Narrow" title={trade.hashId} icon-name="standard:contract">
+                <!--<lightning-button-menu alternative-text="Show menu" icon-name="utility:down" variant="border-filled"
+                    slot="actions" menu-alignment="auto">
+                    <lightning-menu-item label="Cancel" value={offer.offerId} onclick={handleOfferItemClick}></lightning-menu-item>
+                    <lightning-menu-item label="Edit" value={offer.offerId} onclick={handleOfferItemClick}></lightning-menu-item>
+
+                </lightning-button-menu>-->
+                <p class="slds-p-horizontal_small">
+                   <strong>Trade Time: </strong> {trade.tradeTime} <br/>
+                   <strong>Selling: </strong> {trade.selling} <br />
+                   <strong>Sell Amount: </strong> {trade.sellingAmount} <br />
+                   <strong>Buying: </strong> {trade.buying} <br />
+                   <strong>Buy Amount: </strong> {trade.buyingAmount} <br />
+                   <strong>Trade Price: </strong> {trade.price}
+                </p>
+                <!--<p slot="footer">Card Footer</p>-->
+            </lightning-card>
+            <hr key={trade.hashId}/>
+        </template>
+
+        
+
+      
+
+
+    </lightning-modal-body>
+    <lightning-modal-footer>
+
+
+        <lightning-button label="Close" onclick={handleClose}></lightning-button>
+
+
+    </lightning-modal-footer>
+    
+</template>

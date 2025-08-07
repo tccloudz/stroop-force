@@ -1,0 +1,42 @@
+<template>
+
+
+
+    <lightning-select name="base-asset-sel" label="Base Asset" value={baseAssetCode} options={assetOpts}
+        onchange={handleBaseAssetChange} required></lightning-select> <br/>
+
+        <div style="text-align: center;">
+            <lightning-icon icon-name="utility:retweet" alternative-text="swap icon" size="medium"></lightning-icon>
+        </div><br/>
+    
+    <lightning-select name="counter-asset-sel" label="Counter Asset" value={counterAssetCode} options={assetOpts}
+        onchange={handleCounterAssetChange} required></lightning-select><br/><br/>
+
+
+        <div style="text-align: center;">
+        <lightning-button-group>
+            <lightning-button label="Make Offer" variant="neutral" icon-name="utility:product_transfer" onclick={handleMakeOffer}></lightning-button>
+            <lightning-button label="View Offers" icon-name="utility:list" onclick={handleViewOffer}></lightning-button>
+            <lightning-button label="View History" icon-name="utility:clock" onclick={handleViewTrades}></lightning-button>
+        </lightning-button-group>
+        </div><br/><br />   
+        
+        <div style="height: 300px;">
+            <lightning-datatable hide-checkbox-column="true" key-field="asset" data={ordBookAskData} columns={ordBookAskCols}
+                >
+            </lightning-datatable>
+        </div>
+        <br/>
+        <div style="text-align: center;"><lightning-badge label={spreadPriceStr}></lightning-badge></div>
+        
+        <br/>
+
+    <div style="height: 300px;">
+        <lightning-datatable hide-checkbox-column="true" key-field="asset" data={ordBookBidData} columns={ordBookBidCols}
+            >
+        </lightning-datatable>
+    </div>
+
+
+
+</template>

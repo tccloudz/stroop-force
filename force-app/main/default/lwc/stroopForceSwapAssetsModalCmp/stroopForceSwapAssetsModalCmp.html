@@ -1,0 +1,94 @@
+<template>
+    <lightning-modal-header label="Swap Assets"></lightning-modal-header>
+        <lightning-modal-body>
+            <div lwc:if={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+            </div>
+            <div lwc:if={showEdit}>
+               
+                <lightning-tile label="" type="media">
+                    <lightning-icon slot="media" icon-name="utility:forward"></lightning-icon>
+                    <lightning-input type="text" label="Send" id="source-asset" value={sourceAssetCode} disabled ></lightning-input>
+                    <lightning-input type="number" label="Current Balance" id="source-asset-balance" value={sourceAssetBalance} step="0.0000001" disabled ></lightning-input>
+                    <lightning-input type="number" label="Swap Amount" id="swap-amount" value={swapAmount} onchange={handleSwapAmountChange} step="0.0000001" required></lightning-input>
+                </lightning-tile>
+                
+                <br /><br/>
+                <lightning-tile label="" type="media">
+                    <lightning-icon slot="media" icon-name="utility:back"></lightning-icon>
+                    <lightning-select
+                            name="receive"
+                            label="Receive"
+                            value={targetAssetCode}
+                            options={targetAssetOpts}
+                            onchange={handleTargetAssetChange}
+                            required ></lightning-select>
+                    <lightning-input type="number" label="Current Balance" id="target-asset-balance" value={targetAssetBalance} step="0.0000001" disabled ></lightning-input>
+                    <lightning-input type="number" label="Estimated Swap Result Amount" id="swap-result-amount" value={swapResultAmount} step="0.0000001"  ></lightning-input> 
+                </lightning-tile>
+
+                <br />
+                <lightning-breadcrumbs>
+                    <template for:each={pathBreadCrumbs} for:item="pathCrumbs">
+                        <lightning-breadcrumb
+                            key={pathCrumbs.id}
+                            label={pathCrumbs.label}
+                            name={pathCrumbs.name}
+                            >
+                        </lightning-breadcrumb>
+                    </template>
+                </lightning-breadcrumbs>
+                 
+            </div>
+            <div lwc:if={showReview}>
+
+                Please confirm the swap assets, swap amount before continuing. <br/>
+                Enter your password and use the "Confirm Swap" button. 
+            
+                <lightning-tile label="" type="media">
+                    <lightning-icon slot="media" icon-name="utility:forward"></lightning-icon>
+                    <lightning-input type="text" label="Send" id="source-asset-confirm" value={sourceAssetCode} disabled ></lightning-input>
+                    <lightning-input type="number" label="Current Balance" id="confirm-source-asset-balance" value={sourceAssetBalance} step="0.0000001" disabled ></lightning-input>
+                    <lightning-input type="number" label="Confirm Swap Amount" id="confirm-swap-amount" value={swapAmount}  step="0.0000001" disabled ></lightning-input>
+                </lightning-tile>
+                <br/><br />
+                <lightning-tile label="" type="media">
+                    <lightning-icon slot="media" icon-name="utility:back"></lightning-icon>
+                    <lightning-input type="text" label="Receive" id="target-asset-confirm" value={targetAssetCode} disabled ></lightning-input>
+                    <lightning-input type="number" label="Current Balance" id="confirm-target-asset-balance" value={targetAssetBalance} step="0.0000001" disabled ></lightning-input>
+                    <lightning-input type="number" label="Estimated Swap Result Amount" id="confirm-swap-result-amount" value={swapResultAmount} step="0.0000001" disabled></lightning-input> 
+                </lightning-tile>
+                <br />
+                <lightning-input type="password" label="Password" id="enc-key" value={encKey} onchange={handleEKChange} required></lightning-input>
+            </div>
+            <div lwc:if={showResult}>
+                <div lwc:if={showSuccessIcon}>
+
+                    <lightning-icon icon-name="action:approval" alternative-text="Swap Success" title="Swap Success"></lightning-icon>
+                </div>
+                <br/>
+                <lightning-formatted-rich-text value={resultMsg}></lightning-formatted-rich-text>
+               
+
+            </div>
+            <!--<lightning-input type="text" label="To" id="target-asset" value=""  ></lightning-input>
+            <lightning-input type="number" label="Current Balance" id="target-asset-balance" value="" disabled ></lightning-input>
+            <lightning-input type="number" label="Estimated Amount to be Received" id="swap-result-amount" value="" ></lightning-input>  
+        -->  
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <div lwc:if={showEdit}>
+
+                <lightning-button label="Review" onclick={handleReview}></lightning-button>
+       
+            </div>
+            <div lwc:if={showReview}>
+                <lightning-button variant="destructive" label="Go Back" onclick={handleGoBack}></lightning-button>
+                <lightning-button variant="success" label="Confirm Swap" onclick={handleAssetSwap}></lightning-button>
+            </div>
+            <div lwc:if={showResult}>
+                <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+            </div>
+            
+        </lightning-modal-footer>
+</template>

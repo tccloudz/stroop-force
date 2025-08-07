@@ -1,0 +1,71 @@
+<template>
+
+    
+
+        <lightning-modal-header label="Send Assets"></lightning-modal-header>
+        <lightning-modal-body>
+            <div lwc:if={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+            </div>
+            <div lwc:if={showEdit}>
+                <lightning-dynamic-icon 
+                type="trend" 
+                option="up" 
+                alternative-text="Trending down">
+            </lightning-dynamic-icon>
+     
+            
+                <lightning-input type="text" label="Asset" id="source-asset" value={assetCode} disabled ></lightning-input>
+                <lightning-input type="number" label="Current Balance" id="source-asset-balance" value={assetBalance} disabled ></lightning-input>
+                <lightning-input type="number" label="Send Amount" id="send-amount" value={sendAmount} onchange={handleSendAmountChange} required></lightning-input>
+                <lightning-input type="text" label="Recipient Address" id="to-addr" value={toAddr} onchange={handleToAddrChange} required></lightning-input>
+            </div>
+            <div lwc:if={showReview}>
+
+                Please confirm the asset, send amount and receipient wallet address before sending. <br/>
+                Enter your password and use the "Confirm Send" button. 
+            
+                <lightning-input type="text" label="Asset" id="confirm-asset" value={assetCode} disabled ></lightning-input>
+                <!--<lightning-input type="number" label="Current Balance" id="source-asset-balance" value={assetBalance} disabled ></lightning-input>-->
+                <lightning-input type="number" label="Confirm Send Amount" id="confirm-send-amount" value={sendAmount} disabled></lightning-input>
+                <lightning-input type="text" label="Confirm Recipient Address" id="confirm-to-addr" value={toAddr} disabled></lightning-input>
+                <br/>
+                <lightning-input type="password" label="Password" id="enc-key" value={encKey} onchange={handleEKChange} required></lightning-input>
+            </div>
+            <div lwc:if={showResult}>
+                <div lwc:if={showSuccessIcon}>
+
+                    <lightning-dynamic-icon 
+                    type="trend" 
+                    option="up" 
+                    alternative-text="Send Success">
+                    </lightning-dynamic-icon>
+                </div>
+                <br/>
+                <lightning-formatted-rich-text value={resultMsg}></lightning-formatted-rich-text>
+               
+
+            </div>
+            <!--<lightning-input type="text" label="To" id="target-asset" value=""  ></lightning-input>
+            <lightning-input type="number" label="Current Balance" id="target-asset-balance" value="" disabled ></lightning-input>
+            <lightning-input type="number" label="Estimated Amount to be Received" id="swap-result-amount" value="" ></lightning-input>  
+        -->  
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <div lwc:if={showEdit}>
+
+                <lightning-button label="Review" onclick={handleReview}></lightning-button>
+       
+            </div>
+            <div lwc:if={showReview}>
+                <lightning-button variant="destructive" label="Go Back" onclick={handleGoBack}></lightning-button>
+                <lightning-button variant="success" label="Confirm Send" onclick={handleAssetSend}></lightning-button>
+            </div>
+            <div lwc:if={showResult}>
+                <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+            </div>
+            
+        </lightning-modal-footer>
+
+
+</template>
