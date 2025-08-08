@@ -2,8 +2,8 @@
 A stand-alone Salesforce Lightning app that is a Stellar blockchain wallet with Stellar DEX capabilities.
 
 
-<strong>This app was created as a side-project to scratch an itch. This is a work in progress and I am not sure when it will be a finished product, probably never. Use at your own risk!
-<br/><br/>The Lightning app has the following capabilties (thus far): </strong>
+<strong>This app was created as a side-project to scratch an itch. This is a work in progress and I am not sure when it will be a finished product, probably never. Some manual testing has been done, but functionality has not been tested exhaustively. Support for the app will not be provided and I take no responsiblity for any issues that happen with your crypto assets. Please do <a href="https://consumer.ftc.gov/articles/what-know-about-cryptocurrency-and-scams">your due diligence</a> when buying / selling crypto or participating in any crypto-related projects.<br/><br/><br/> <h1>Use at your own risk!</h1>
+<br/><br/><br />The Lightning app has the following capabilties (thus far): </strong>
 
 <ul>
   <li>
